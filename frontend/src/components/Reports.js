@@ -18,7 +18,7 @@ const InventoryReport = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("https://backend-t6dk.onrender.com/api/products"); // <-- updated backend URL
+        const res = await fetch("https://backend-t6dk.onrender.com/api/products");
         if (!res.ok) throw new Error(`Server responded ${res.status}`);
         const products = await res.json();
 
@@ -51,23 +51,58 @@ const InventoryReport = () => {
 
   if (loading) {
     return (
-      <div className="p-6 max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold mb-4">Inventory Distribution</h2>
-        <p>Loading inventory data...</p>
+      <div>
+        <style>{`
+          .page-container {
+            padding: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+          }
+          .title {
+            font-size: 1.75rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+          }
+        `}</style>
+        <div className="page-container">
+          <h2 className="title">Inventory Distribution</h2>
+          <p>Loading inventory data...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
-      <h2 className="text-3xl font-bold mb-4">Inventory Distribution</h2>
-      {inventoryData ? (
-        <div className="bg-white p-4 rounded shadow">
-          <Pie data={inventoryData} />
-        </div>
-      ) : (
-        <p>Failed to load inventory data.</p>
-      )}
+    <div>
+      <style>{`
+        .page-container {
+          padding: 1.5rem;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        .title {
+          font-size: 1.75rem;
+          font-weight: bold;
+          margin-bottom: 1rem;
+        }
+        .card {
+          background: #fff;
+          padding: 1rem;
+          border-radius: 8px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+      `}</style>
+
+      <div className="page-container">
+        <h2 className="title">Inventory Distribution</h2>
+        {inventoryData ? (
+          <div className="card">
+            <Pie data={inventoryData} />
+          </div>
+        ) : (
+          <p>Failed to load inventory data.</p>
+        )}
+      </div>
     </div>
   );
 };
