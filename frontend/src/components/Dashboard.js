@@ -2,10 +2,30 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const API_SALES = "https://backend-t6dk.onrender.com/api/sales";
+const API_PRODUCTS = "https://backend-t6dk.onrender.com/api/products";
 
-const Dashboard = ({ products, customers }) => {
+const Dashboard = ({ customers }) => {
+  const [products, setProducts] = useState([]);
   const [totalSales, setTotalSales] = useState(0);
   const [loadingSales, setLoadingSales] = useState(true);
+  const [loadingProducts, setLoadingProducts] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch(API_PRODUCTS);
+        if (res.ok) {
+          const data = await res.json();
+          setProducts(data);
+        }
+      } catch (err) {
+        console.error("Error loading products:", err);
+      } finally {
+        setLoadingProducts(false);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   useEffect(() => {
     const fetchSales = async () => {
@@ -72,7 +92,7 @@ const Dashboard = ({ products, customers }) => {
           padding: 1.5rem;
           border-radius: 8px;
           box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-          overflow-x: auto; /* Enable horizontal scroll on small screens */
+          overflow-x: auto;
         }
         .section-title {
           font-size: 1.125rem;
@@ -81,17 +101,17 @@ const Dashboard = ({ products, customers }) => {
         }
         .styled-table {
           width: 100%;
-          min-width: 600px; /* Ensure table is wide enough for all columns */
+          min-width: 600px;
           border-collapse: collapse;
         }
         .styled-table th,
         .styled-table td {
-          padding: 0.75rem 1rem; /* Increased padding for readability */
+          padding: 0.75rem 1rem;
           border-bottom: 1px solid #e5e7eb;
           text-align: left;
-          white-space: nowrap; /* Prevent text wrapping */
-          overflow: hidden; /* Handle overflow */
-          text-overflow: ellipsis; /* Add ellipsis for truncated text */
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         .styled-table th {
           background: #f3f4f6;
@@ -134,6 +154,10 @@ const Dashboard = ({ products, customers }) => {
         .btn-green:hover {
           background: #15803d;
         }
+        .card-heading{
+        color:Blue
+        
+        }
       `}</style>
 
       <div className="dashboard-container">
@@ -174,11 +198,15 @@ const Dashboard = ({ products, customers }) => {
                 </tr>
               </thead>
               <tbody>
-                {products.length > 0 ? (
-                  products.map((p) => (
+                {loadingProducts ? (
+                  <tr>
+                    <td colSpan="6" className="no-data">Loading products...</td>
+                  </tr>
+                ) : products.length > 0 ? (
+                  products.slice(0, 3).map((p) => (
                     <tr key={p._id}>
                       <td>{p.name}</td>
-                      <td title={p.description}>{p.description}</td> {/* Tooltip for full text */}
+                      <td title={p.description}>{p.description}</td>
                       <td>{p.category}</td>
                       <td>M{p.price}</td>
                       <td style={{ color: p.quantity < 5 ? 'red' : 'green' }}>
@@ -214,7 +242,7 @@ const Dashboard = ({ products, customers }) => {
                   customers.slice(0, 5).map((c) => (
                     <tr key={c._id}>
                       <td>{c.name}</td>
-                      <td title={c.email}>{c.email}</td> {/* Tooltip for full text */}
+                      <td title={c.email}>{c.email}</td>
                       <td>{c.phone}</td>
                     </tr>
                   ))
