@@ -53,6 +53,9 @@ const Dashboard = ({ customers }) => {
           max-width: 1200px;
           margin: 0 auto;
         }
+        h3 {
+          color: #2563eb; /* blue */
+        }
         .dashboard-title {
           font-size: 2rem;
           font-weight: bold;
@@ -77,7 +80,6 @@ const Dashboard = ({ customers }) => {
           font-size: 1.25rem;
           font-weight: 600;
           margin-bottom: 0.5rem;
-          color: #4169E1;
         }
         .card-count {
           font-size: 2rem;
@@ -99,6 +101,7 @@ const Dashboard = ({ customers }) => {
           font-size: 1.125rem;
           font-weight: 600;
           margin-bottom: 0.75rem;
+          color: #2563eb; /* ensure h4 also blue if desired */
         }
         .styled-table {
           width: 100%;
@@ -155,9 +158,6 @@ const Dashboard = ({ customers }) => {
         .btn-green:hover {
           background: #15803d;
         }
-        #target1{
-        color: blue;
-        }
       `}</style>
 
       <div className="dashboard-container">
@@ -166,15 +166,15 @@ const Dashboard = ({ customers }) => {
         {/* Summary Cards */}
         <div className="summary-cards">
           <div className="card">
-            <h3 id="target1" className="card-heading">Products</h3>
+            <h3 className="card-heading">Products</h3>
             <p className="card-count">{products.length}</p>
           </div>
           <div className="card">
-            <h3 id="target1" className="card-heading">Customers</h3>
+            <h3 className="card-heading">Customers</h3>
             <p className="card-count">{customers.length}</p>
           </div>
           <div className="card">
-            <h3 id="target1" className="card-heading">Total Sales</h3>
+            <h3 className="card-heading">Total Sales</h3>
             <p className="card-count">
               {loadingSales ? "Loading..." : `M${totalSales.toLocaleString()}`}
             </p>
@@ -209,9 +209,7 @@ const Dashboard = ({ customers }) => {
                       <td title={p.description}>{p.description}</td>
                       <td>{p.category}</td>
                       <td>M{p.price}</td>
-                      <td style={{ color: p.quantity < 5 ? 'red' : 'green' }}>
-                        {p.quantity}
-                      </td>
+                      <td style={{ color: p.quantity < 5 ? 'red' : 'green' }}>{p.quantity}</td>
                       <td style={{ color: p.quantity < 5 ? 'red' : 'green' }}>
                         {p.quantity < 5 ? "Low Stock" : "In Stock"}
                       </td>
