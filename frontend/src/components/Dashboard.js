@@ -1,9 +1,30 @@
-// components/Dashboard.js
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import "./Dashboard.css"; 
+
+const API_SALES = "https://backend-t6dk.onrender.com/api/sales";
 
 const Dashboard = ({ products, customers }) => {
+  const [totalSales, setTotalSales] = useState(0);
+  const [loadingSales, setLoadingSales] = useState(true);
+
+  useEffect(() => {
+    const fetchSales = async () => {
+      try {
+        const res = await fetch(API_SALES);
+        if (res.ok) {
+          const salesData = await res.json();
+          const total = salesData.reduce((sum, sale) => sum + (sale.amount || 0), 0);
+          setTotalSales(total);
+        }
+      } catch (err) {
+        console.error("Error loading sales:", err);
+      } finally {
+        setLoadingSales(false);
+      }
+    };
+    fetchSales();
+  }, []);
+
   return (
     <div>
       <style>{`
@@ -109,7 +130,7 @@ const Dashboard = ({ products, customers }) => {
 
       <div className="dashboard-container">
         <h2 className="dashboard-title">Dashboard</h2>
-        
+
         {/* Summary Cards */}
         <div className="summary-cards">
           <div className="card">
@@ -120,8 +141,14 @@ const Dashboard = ({ products, customers }) => {
             <h3 className="card-heading">Customers</h3>
             <p className="card-count">{customers.length}</p>
           </div>
+          <div className="card">
+            <h3 className="card-heading">Total Sales</h3>
+            <p className="card-count">
+              {loadingSales ? "Loading..." : `M${totalSales.toLocaleString()}`}
+            </p>
+          </div>
         </div>
-        
+
         {/* Tables Section */}
         <div className="tables-section">
           {/* Products Table */}
@@ -192,7 +219,7 @@ const Dashboard = ({ products, customers }) => {
             </table>
           </div>
         </div>
-        
+
         {/* Navigation Buttons */}
         <div className="nav-buttons">
           <Link to="/product-management" className="btn btn-blue">
