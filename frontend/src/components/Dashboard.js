@@ -77,7 +77,7 @@ const Dashboard = ({ customers }) => {
           font-size: 1.25rem;
           font-weight: 600;
           margin-bottom: 0.5rem;
-          color: #374151; /* Changed to dark gray for visibility */
+          color: #4169E1;
         }
         .card-count {
           font-size: 2rem;
@@ -155,6 +155,9 @@ const Dashboard = ({ customers }) => {
         .btn-green:hover {
           background: #15803d;
         }
+        #target1{
+        color: blue;
+        }
       `}</style>
 
       <div className="dashboard-container">
@@ -163,15 +166,15 @@ const Dashboard = ({ customers }) => {
         {/* Summary Cards */}
         <div className="summary-cards">
           <div className="card">
-            <h3 className="card-heading">Products</h3>
+            <h3 id="target1" className="card-heading">Products</h3>
             <p className="card-count">{products.length}</p>
           </div>
           <div className="card">
-            <h3 className="card-heading">Customers</h3>
+            <h3 id="target1" className="card-heading">Customers</h3>
             <p className="card-count">{customers.length}</p>
           </div>
           <div className="card">
-            <h3 className="card-heading">Total Sales</h3>
+            <h3 id="target1" className="card-heading">Total Sales</h3>
             <p className="card-count">
               {loadingSales ? "Loading..." : `M${totalSales.toLocaleString()}`}
             </p>
