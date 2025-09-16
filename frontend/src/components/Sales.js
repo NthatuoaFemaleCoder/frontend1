@@ -57,23 +57,17 @@ const Sales = () => {
       return;
     }
 
-    const totalAmount = product.price * saleQty;
-
-    const saleRecord = {
+    const saleData = {
       productId: product._id,
-      productName: product.name,
       customerId: customer._id,
-      customerName: customer.name,
       quantity: saleQty,
-      date: new Date().toLocaleString(),
-      amount: totalAmount,
     };
 
     try {
       const res = await fetch(API_SALES, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(saleRecord),
+        body: JSON.stringify(saleData),
       });
       if (!res.ok) throw new Error("Failed to save sale");
       const savedSale = await res.json();
