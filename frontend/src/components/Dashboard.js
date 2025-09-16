@@ -77,6 +77,7 @@ const Dashboard = ({ customers }) => {
           font-size: 1.25rem;
           font-weight: 600;
           margin-bottom: 0.5rem;
+          color: #374151; /* Changed to dark gray for visibility */
         }
         .card-count {
           font-size: 2rem;
@@ -153,10 +154,6 @@ const Dashboard = ({ customers }) => {
         }
         .btn-green:hover {
           background: #15803d;
-        }
-        .card-heading{
-        color:Blue
-        
         }
       `}</style>
 
