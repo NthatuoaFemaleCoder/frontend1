@@ -1,107 +1,207 @@
 // components/Dashboard.js
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Dashboard.css"; // Ensure your CSS is imported
+// import "./Dashboard.css"; 
 
 const Dashboard = ({ products, customers }) => {
   return (
-    <div className="dashboard-container p-6 max-w-7xl mx-auto">
-      <h2 className="dashboard-title mb-6">Dashboard</h2>
-      
-      {/* Summary Cards */}
-      <div className="summary-cards mb-8">
-        <div className="card">
-          <h3 className="card-heading">Products</h3>
-          <p className="card-count">{products.length}</p>
+    <div>
+      <style>{`
+        .dashboard-container {
+          padding: 1.5rem;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        .dashboard-title {
+          font-size: 2rem;
+          font-weight: bold;
+          margin-bottom: 1.5rem;
+        }
+        .summary-cards {
+          display: flex;
+          gap: 1rem;
+          margin-bottom: 2rem;
+        }
+        .card {
+          flex: 1;
+          background: #fff;
+          padding: 1.5rem;
+          border-radius: 8px;
+          text-align: center;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .card-heading {
+          font-size: 1.25rem;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+        }
+        .card-count {
+          font-size: 2rem;
+          font-weight: bold;
+          color: #2563eb;
+        }
+        .tables-section {
+          display: grid;
+          gap: 2rem;
+        }
+        .table-container {
+          background: #fff;
+          padding: 1rem;
+          border-radius: 8px;
+          box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+        .section-title {
+          font-size: 1.125rem;
+          font-weight: 600;
+          margin-bottom: 0.75rem;
+        }
+        .styled-table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+        .styled-table th,
+        .styled-table td {
+          padding: 0.75rem;
+          border-bottom: 1px solid #e5e7eb;
+          text-align: left;
+        }
+        .styled-table th {
+          background: #f3f4f6;
+          font-weight: 600;
+          color: #374151;
+        }
+        .styled-table tr:hover td {
+          background: #f9fafb;
+        }
+        .no-data {
+          text-align: center;
+          padding: 1rem;
+          color: #6b7280;
+          font-style: italic;
+        }
+        .nav-buttons {
+          display: flex;
+          gap: 1rem;
+          justify-content: center;
+          margin-top: 2rem;
+        }
+        .btn {
+          padding: 0.75rem 1.5rem;
+          font-weight: 600;
+          border-radius: 6px;
+          text-decoration: none;
+          color: #fff;
+          transition: background 0.2s;
+        }
+        .btn-blue {
+          background: #2563eb;
+        }
+        .btn-blue:hover {
+          background: #1e40af;
+        }
+        .btn-green {
+          background: #16a34a;
+        }
+        .btn-green:hover {
+          background: #15803d;
+        }
+      `}</style>
+
+      <div className="dashboard-container">
+        <h2 className="dashboard-title">Dashboard</h2>
+        
+        {/* Summary Cards */}
+        <div className="summary-cards">
+          <div className="card">
+            <h3 className="card-heading">Products</h3>
+            <p className="card-count">{products.length}</p>
+          </div>
+          <div className="card">
+            <h3 className="card-heading">Customers</h3>
+            <p className="card-count">{customers.length}</p>
+          </div>
         </div>
-        <div className="card">
-          <h3 className="card-heading">Customers</h3>
-          <p className="card-count">{customers.length}</p>
-        </div>
-      </div>
-      
-      {/* Well-organized Tables */}
-      <div className="tables-section">
-        {/* Products Table */}
-        <div className="table-container">
-          <h4 className="section-title">Products</h4>
-          <table className="styled-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Qty</th>
-                <th>Stock Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.length > 0 ? (
-                products.map((p, index) => (
-                  <tr key={p._id}>
-                    <td>{p.name}</td>
-                    <td>{p.description}</td>
-                    <td>{p.category}</td>
-                    <td>M{p.price}</td>
-                    <td style={{ color: p.quantity < 5 ? 'red' : 'green' }}>{p.quantity}</td>
-                    <td style={{ color: p.quantity < 5 ? 'red' : 'green' }}>
-                      {p.quantity < 5 ? "Low Stock" : "In Stock"}
-                    </td>
-                  </tr>
-                ))
-              ) : (
+        
+        {/* Tables Section */}
+        <div className="tables-section">
+          {/* Products Table */}
+          <div className="table-container">
+            <h4 className="section-title">Products</h4>
+            <table className="styled-table">
+              <thead>
                 <tr>
-                  <td colSpan="6" className="no-data">No products available.</td>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Qty</th>
+                  <th>Stock Status</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-        {/* Customers Table */}
-        <div className="table-container">
-          <h4 className="section-title">Customers</h4>
-          <table className="styled-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-              </tr>
-            </thead>
-            <tbody>
-              {customers.length > 0 ? (
-                customers.slice(0, 5).map((c) => (
-                  <tr key={c._id}>
-                    <td>{c.name}</td>
-                    <td>{c.email}</td>
-                    <td>{c.phone}</td>
+              </thead>
+              <tbody>
+                {products.length > 0 ? (
+                  products.map((p) => (
+                    <tr key={p._id}>
+                      <td>{p.name}</td>
+                      <td>{p.description}</td>
+                      <td>{p.category}</td>
+                      <td>M{p.price}</td>
+                      <td style={{ color: p.quantity < 5 ? 'red' : 'green' }}>
+                        {p.quantity}
+                      </td>
+                      <td style={{ color: p.quantity < 5 ? 'red' : 'green' }}>
+                        {p.quantity < 5 ? "Low Stock" : "In Stock"}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6" className="no-data">No products available.</td>
                   </tr>
-                ))
-              ) : (
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Customers Table */}
+          <div className="table-container">
+            <h4 className="section-title">Customers</h4>
+            <table className="styled-table">
+              <thead>
                 <tr>
-                  <td colSpan="3" className="no-data">No customers yet.</td>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {customers.length > 0 ? (
+                  customers.slice(0, 5).map((c) => (
+                    <tr key={c._id}>
+                      <td>{c.name}</td>
+                      <td>{c.email}</td>
+                      <td>{c.phone}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="3" className="no-data">No customers yet.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-      
-      {/* Navigation Buttons */}
-      <div className="nav-buttons mt-8 flex gap-4 justify-center">
-        <Link
-          to="/product-management"
-          className="btn btn-blue"
-        >
-          Manage Products
-        </Link>
-        <Link
-          to="/customers"
-          className="btn btn-green"
-        >
-          Manage Customers
-        </Link>
+        
+        {/* Navigation Buttons */}
+        <div className="nav-buttons">
+          <Link to="/product-management" className="btn btn-blue">
+            Manage Products
+          </Link>
+          <Link to="/customers" className="btn btn-green">
+            Manage Customers
+          </Link>
+        </div>
       </div>
     </div>
   );
